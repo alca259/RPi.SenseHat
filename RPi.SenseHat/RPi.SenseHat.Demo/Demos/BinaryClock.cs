@@ -11,7 +11,7 @@ namespace RPi.SenseHat.Demo.Demos
     public class BinaryClock : SenseHatDemo
     {
         private readonly Color _activeBitColor = Colors.Red;
-        private readonly Color _inctiveBitColor = Colors.DimGray;
+        private readonly Color _inactiveBitColor = Colors.DimGray;
 
         public BinaryClock(ISenseHat senseHat, Action<string> setScreenText)
             : base(senseHat, setScreenText)
@@ -46,7 +46,7 @@ namespace RPi.SenseHat.Demo.Demos
             {
                 Color bitColor = (value % 2 == 1)
                     ? _activeBitColor
-                    : _inctiveBitColor;
+                    : _inactiveBitColor;
 
                 SenseHat.Display.Screen[x, y] = bitColor;
                 SenseHat.Display.Screen[x + 1, y] = bitColor;

@@ -30,8 +30,9 @@ namespace RPi.SenseHat.Demo
 	public abstract class SenseHatDemo
 	{
 		private readonly ManualResetEventSlim _waitEvent = new ManualResetEventSlim(false);
+	    public bool isRunning = true;
 
-		protected SenseHatDemo(ISenseHat senseHat, Action<string> setScreenText = null)
+        protected SenseHatDemo(ISenseHat senseHat, Action<string> setScreenText = null)
 		{
 			SetScreenText = setScreenText;
 			SenseHat = senseHat;
@@ -43,7 +44,12 @@ namespace RPi.SenseHat.Demo
 
 		public abstract void Run();
 
-		protected void Sleep(TimeSpan duration)
+	    public void Stop()
+	    {
+	        isRunning = false;
+	    }
+
+        protected void Sleep(TimeSpan duration)
 		{
 			_waitEvent.Wait(duration);
 		}

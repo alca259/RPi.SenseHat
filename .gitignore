@@ -182,3 +182,4 @@ nuget.exe
 Thumbs.db
 PrivateSettings.config
 .vs/
+*.opendb

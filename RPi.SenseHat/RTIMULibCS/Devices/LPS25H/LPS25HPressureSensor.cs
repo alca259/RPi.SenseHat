@@ -23,8 +23,10 @@
 
 using System;
 using System.Threading.Tasks;
+using Windows.Devices;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
+using Microsoft.IoT.Lightning.Providers;
 
 namespace RichardsTech.Sensors.Devices.LPS25H
 {
@@ -71,21 +73,25 @@ namespace RichardsTech.Sensors.Devices.LPS25H
 		{
 			try
 			{
-				string aqsFilter = I2cDevice.GetDeviceSelector("I2C1");
+			    if (LightningProvider.IsLightningEnabled)
+			    {
+			        // Set Lightning as the default provider
+			        LowLevelDevicesController.DefaultProvider = LightningProvider.GetAggregateProvider();
+			    }
 
-				DeviceInformationCollection collection = await DeviceInformation.FindAllAsync(aqsFilter);
-				if (collection.Count == 0)
-				{
-					throw new SensorException("I2C device not found");
-				}
-
-				I2cConnectionSettings i2CSettings = new I2cConnectionSettings(_i2CAddress)
+                I2cConnectionSettings i2CSettings = new I2cConnectionSettings(_i2CAddress)
 				{
 					BusSpeed = I2cBusSpeed.FastMode
 				};
 
-				_i2CDevice = await I2cDevice.FromIdAsync(collection[0].Id, i2CSettings);
-			}
+			    var controller = await I2cController.GetDefaultAsync();
+			    if (controller == null)
+			    {
+			        throw new SensorException("IC2 device not found");
+			    }
+
+			    _i2CDevice = controller.GetDevice(i2CSettings);
+            }
 			catch (Exception exception)
 			{
 				throw new SensorException("Failed to connect to LPS25H", exception);

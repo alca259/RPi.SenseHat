@@ -45,7 +45,7 @@ namespace RPi.SenseHat.Demo
 
             //return new WriteTemperature(senseHat, setScreenText); // Is it only me or does it show some unusual high temperature? :-S
 
-            return new GravityBlob(senseHat, setScreenText); // The green blob is drawn to the center of the earth! If you hold it upside down it gets angry and turns red. :-O
+            //return new GravityBlob(senseHat, setScreenText); // The green blob is drawn to the center of the earth! If you hold it upside down it gets angry and turns red. :-O
 
             //return new Compass(senseHat, setScreenText); // Note! You must calibrate the magnetic sensor by moving the Raspberry Pi device around in an 'eight' figure a few seconds at startup!
 
@@ -60,6 +60,8 @@ namespace RPi.SenseHat.Demo
             //return new ReadAllSensors(senseHat, setScreenText); // Shows an example of how to read all the different sensors.
 
             //return new BinaryClock(senseHat, setScreenText); // Shows a binary clock (by Mark Muller)
+
+            return new BinaryClock2(senseHat, setScreenText); // Shows a binary clock (by Mark Muller)
         }
     }
 }
